@@ -89,7 +89,8 @@ module SmarterCSV
       while ! f.eof?    # we can't use f.readlines() here, because this would read the whole file into memory at once, and eof => true
         line = f.readline  # read one line.. this uses the input_record_separator $/ which we set previously!
         #enforces UTF-8 encoding on each line if force_utf8 option is true
-        line = line.encode!('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '') if options[:force_utf8]        line_count += 1
+        line = line.encode!('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '') if options[:force_utf8]
+        line_count += 1
         print "processing line %10d\r" % line_count if options[:verbose]
         next  if  line =~ options[:comment_regexp]  # ignore all comment lines if there are any
 
