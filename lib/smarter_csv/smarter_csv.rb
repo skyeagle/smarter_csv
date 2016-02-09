@@ -90,6 +90,8 @@ module SmarterCSV
         line = f.readline  # read one line.. this uses the input_record_separator $/ which we set previously!
         line_count += 1
         print "processing line %10d\r" % line_count if options[:verbose]
+
+        line.scrub! # Regexp match blows up with various UTF-8 characters.
         next  if  line =~ options[:comment_regexp]  # ignore all comment lines if there are any
 
         # cater for the quoted csv data containing the row separator carriage return character
