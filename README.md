@@ -34,9 +34,6 @@ The two main choices you have in terms of how to call `SmarterCSV.process` are:
  * calling `process` with or without a block
  * passing a `:chunk_size` to the `process` method, and processing the CSV-file in chunks, rather than in one piece.
 
-Tip: If you are uncertain about what line endings a CSV-file uses, try specifying `:row_sep => :auto` as part of the options.
-But this could be slow, because it will try to analyze each CSV file first. If you want to speed things up, set the `:row_sep` manually! Checkout Example 5 for unusual `:row_sep` and `:col_sep`.
-
 #### Example 1a: How SmarterCSV processes CSV-files as array of hashes:
 Please note how each hash contains only the keys for columns with non-null values.
 
@@ -180,8 +177,7 @@ The options and the block are optional.
      | Option                      | Default  |  Explanation                                                                         |
      ---------------------------------------------------------------------------------------------------------------------------------
      | :col_sep                    |   ','    | column separator                                                                     |
-     | :row_sep                    | $/ ,"\n" | row separator or record separator , defaults to system's $/ , which defaults to "\n" |
-     |                             |          | This can also be set to :auto, but will process the whole cvs file first  (slow!)    |
+     | :row_sep                    |   "\n"   | row separator or record separator , defaults to "\n"                                 |
      | :quote_char                 |   '"'    | quotation character                                                                  |
      | :comment_regexp             |   /^#/   | regular expression which matches comment lines (see NOTE about the CSV header)       |
      | :chunk_size                 |   nil    | if set, determines the desired chunk-size (defaults to nil, no chunk processing)     |
