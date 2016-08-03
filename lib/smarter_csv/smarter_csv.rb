@@ -207,6 +207,13 @@ module SmarterCSV
   end
 
   def self.normalize_file(original_file)
+    if original_file.is_a?(StringIO)
+      saved_original = Tempfile.new('original_file')
+      saved_original.binmode
+      saved_original.write(original_file.read)
+      original_file = saved_original
+    end
+
     tempfile = Tempfile.new('temp')
 
     cmd = %Q(perl -pe 's/\\r\\n/\\n/g' < #{original_file.path} | perl -pe 's/\\r/\\n/g' > #{tempfile.path})
@@ -216,6 +223,11 @@ module SmarterCSV
       unless st.success?
         raise RuntimeError, "ERROR [smarter_csv]: failure executing '#{cmd}' command, output: #{err}"
       end
+    end
+
+    if saved_original
+      saved_original.close
+      saved_original.unlink
     end
 
     tempfile.rewind
