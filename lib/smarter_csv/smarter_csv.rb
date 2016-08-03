@@ -189,7 +189,7 @@ module SmarterCSV
     end
   ensure
     filehandle.close
-    filehandle.unlink
+    filehandle.unlink if filehandle.respond_to?(:unlink)
   end
 
   private
