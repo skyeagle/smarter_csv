@@ -211,6 +211,7 @@ module SmarterCSV
       saved_original = Tempfile.new('original_file')
       saved_original.binmode
       saved_original.write(original_file.read)
+      saved_original.close
       original_file = saved_original
     end
 
@@ -226,7 +227,6 @@ module SmarterCSV
     end
 
     if saved_original
-      saved_original.close
       saved_original.unlink
     end
 
